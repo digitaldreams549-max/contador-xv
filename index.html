@@ -1,62 +1,61 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Cuenta regresiva</title>
+
 <style>
+
 html, body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    min-height: 100%;
     background: transparent;
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: Georgia, serif;
     color: white;
 }
 
 .contador {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
-}
-
-.contenedor {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-}
-
-.unidad {
     text-align: center;
-    min-width: 70px;
+}
+
+.bloque {
+    margin: 0 20px;
 }
 
 .numero {
-    font-size: 55px;
+    font-size: 60px;
     line-height: 1;
-    font-weight: normal;
 }
 
 .texto {
     margin-top: 10px;
     font-family: Arial, sans-serif;
-    font-size: 9px;
+    font-size: 10px;
     letter-spacing: 3px;
     color: #D4AF37;
 }
 
-@media(max-width:600px) {
-    .contenedor {
-        gap: 8px;
-    }
+@media (max-width: 600px) {
 
-    .unidad {
-        min-width: 55px;
+    .bloque {
+        margin: 0 7px;
     }
 
     .numero {
@@ -67,90 +66,97 @@ body {
         font-size: 6px;
         letter-spacing: 1px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <div class="contador">
 
-    <div class="contenedor">
+    <div class="bloque">
+        <div class="numero" id="dias">00</div>
+        <div class="texto">DÍAS</div>
+    </div>
 
-        <div class="unidad">
-            <div class="numero" id="dias">00</div>
-            <div class="texto">DÍAS</div>
-        </div>
+    <div class="bloque">
+        <div class="numero" id="horas">00</div>
+        <div class="texto">HORAS</div>
+    </div>
 
-        <div class="unidad">
-            <div class="numero" id="horas">00</div>
-            <div class="texto">HORAS</div>
-        </div>
+    <div class="bloque">
+        <div class="numero" id="minutos">00</div>
+        <div class="texto">MINUTOS</div>
+    </div>
 
-        <div class="unidad">
-            <div class="numero" id="minutos">00</div>
-            <div class="texto">MINUTOS</div>
-        </div>
-
-        <div class="unidad">
-            <div class="numero" id="segundos">00</div>
-            <div class="texto">SEGUNDOS</div>
-        </div>
-
+    <div class="bloque">
+        <div class="numero" id="segundos">00</div>
+        <div class="texto">SEGUNDOS</div>
     </div>
 
 </div>
 
 <script>
 
-const fechaEvento = new Date(
-    "2026-12-05T14:50:00-06:00"
-).getTime();
+function contador() {
 
-function actualizar() {
+    var fecha = new Date("2026-12-05T14:50:00-06:00");
 
-    const ahora = new Date().getTime();
-    const diferencia = fechaEvento - ahora;
+    var ahora = new Date();
+
+    var diferencia = fecha.getTime() - ahora.getTime();
 
     if (diferencia <= 0) {
-        document.getElementById("dias").textContent = "00";
-        document.getElementById("horas").textContent = "00";
-        document.getElementById("minutos").textContent = "00";
-        document.getElementById("segundos").textContent = "00";
+
+        document.getElementById("dias").innerHTML = "00";
+        document.getElementById("horas").innerHTML = "00";
+        document.getElementById("minutos").innerHTML = "00";
+        document.getElementById("segundos").innerHTML = "00";
+
         return;
+
     }
 
-    const dias = Math.floor(diferencia / 86400000);
-
-    const horas = Math.floor(
-        (diferencia % 86400000) / 3600000
+    var dias = Math.floor(
+        diferencia / (1000 * 60 * 60 * 24)
     );
 
-    const minutos = Math.floor(
-        (diferencia % 3600000) / 60000
+    var horas = Math.floor(
+        (diferencia / (1000 * 60 * 60)) % 24
     );
 
-    const segundos = Math.floor(
-        (diferencia % 60000) / 1000
+    var minutos = Math.floor(
+        (diferencia / (1000 * 60)) % 60
     );
 
-    document.getElementById("dias").textContent =
-        String(dias).padStart(2, "0");
+    var segundos = Math.floor(
+        (diferencia / 1000) % 60
+    );
 
-    document.getElementById("horas").textContent =
-        String(horas).padStart(2, "0");
+    document.getElementById("dias").innerHTML =
+        dias;
 
-    document.getElementById("minutos").textContent =
-        String(minutos).padStart(2, "0");
+    document.getElementById("horas").innerHTML =
+        horas.toString().padStart(2, "0");
 
-    document.getElementById("segundos").textContent =
-        String(segundos).padStart(2, "0");
+    document.getElementById("minutos").innerHTML =
+        minutos.toString().padStart(2, "0");
+
+    document.getElementById("segundos").innerHTML =
+        segundos.toString().padStart(2, "0");
+
 }
 
-actualizar();
-setInterval(actualizar, 1000);
+contador();
+
+setInterval(contador, 1000);
 
 </script>
 
 </body>
+
 </html>
+```
