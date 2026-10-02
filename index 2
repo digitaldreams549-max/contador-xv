@@ -1,0 +1,162 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cuenta regresiva</title>
+
+<style>
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: transparent;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Georgia, serif;
+    color: white;
+}
+
+.contador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.bloque {
+    margin: 0 20px;
+}
+
+.numero {
+    font-size: 60px;
+    line-height: 1;
+}
+
+.texto {
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #D4AF37;
+}
+
+@media (max-width: 600px) {
+
+    .bloque {
+        margin: 0 7px;
+    }
+
+    .numero {
+        font-size: 32px;
+    }
+
+    .texto {
+        font-size: 6px;
+        letter-spacing: 1px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="contador">
+
+    <div class="bloque">
+        <div class="numero" id="dias">00</div>
+        <div class="texto">DÍAS</div>
+    </div>
+
+    <div class="bloque">
+        <div class="numero" id="horas">00</div>
+        <div class="texto">HORAS</div>
+    </div>
+
+    <div class="bloque">
+        <div class="numero" id="minutos">00</div>
+        <div class="texto">MINUTOS</div>
+    </div>
+
+    <div class="bloque">
+        <div class="numero" id="segundos">00</div>
+        <div class="texto">SEGUNDOS</div>
+    </div>
+
+</div>
+
+<script>
+
+function contador() {
+
+    var fecha = new Date("2026-12-05T14:50:00-06:00");
+
+    var ahora = new Date();
+
+    var diferencia = fecha.getTime() - ahora.getTime();
+
+    if (diferencia <= 0) {
+
+        document.getElementById("dias").innerHTML = "00";
+        document.getElementById("horas").innerHTML = "00";
+        document.getElementById("minutos").innerHTML = "00";
+        document.getElementById("segundos").innerHTML = "00";
+
+        return;
+
+    }
+
+    var dias = Math.floor(
+        diferencia / (1000 * 60 * 60 * 24)
+    );
+
+    var horas = Math.floor(
+        (diferencia / (1000 * 60 * 60)) % 24
+    );
+
+    var minutos = Math.floor(
+        (diferencia / (1000 * 60)) % 60
+    );
+
+    var segundos = Math.floor(
+        (diferencia / 1000) % 60
+    );
+
+    document.getElementById("dias").innerHTML =
+        dias;
+
+    document.getElementById("horas").innerHTML =
+        horas.toString().padStart(2, "0");
+
+    document.getElementById("minutos").innerHTML =
+        minutos.toString().padStart(2, "0");
+
+    document.getElementById("segundos").innerHTML =
+        segundos.toString().padStart(2, "0");
+
+}
+
+contador();
+
+setInterval(contador, 1000);
+
+</script>
+
+</body>
+
+</html>
+```
